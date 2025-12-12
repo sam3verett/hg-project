@@ -179,6 +179,9 @@ footer {
   position: relative;             /* for the tail positioning */
   background-color: #4f7c68;      /* bubble background */
   color: #ffffff;                 /* text color */
+  a:link {
+  color: white; /* Sets the link color to red */
+}
   padding: 1rem 1.2rem;           /* space inside bubble */
   border-radius: 10px;            /* rounded corners */
   font-family: "Courier New", Courier, monospace;
