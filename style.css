@@ -168,3 +168,9 @@ footer {
     transform: translateX(-260px);
   }
 }
+
+@media (min-width: 900px) {
+  .sidebar-toggle-btn {
+    display: none;
+  }
+}
