@@ -177,7 +177,6 @@ footer {
 
 .callout {
   position: relative;             /* for the tail positioning */
-  max-width: ;               /* optional, limits bubble width */
   background-color: #4f7c68;      /* bubble background */
   color: #ffffff;                 /* text color */
   padding: 1rem 1.2rem;           /* space inside bubble */
