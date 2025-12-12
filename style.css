@@ -1,27 +1,38 @@
 :root {
   /* Light mode */
-  --bg-color: #f8f5f0;     /* light beige */
-  --text-color: #1b1b1b;   /* dark gray text */
-  --link-color: #2f5d50;   /* pine green */
-  --accent-color: #4f7c68; /* deeper forest green */
+  --bg-color: #f8f5f0;
+  --text-color: #1b1b1b;
+  --link-color: #2f5d50;
+  --accent-color: #4f7c68;
+
+  /* Sidebar variables */
+  --sidebar-bg: var(--link-color);
+  --sidebar-text: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #1f1f1f;     /* charcoal gray */
-    --text-color: #f5f3ef;   /* off-white text */
-    --link-color: #9cc3b1;   /* muted green */
-    --accent-color: #b9d2c3; /* pale moss green */
+    --bg-color: #1f1f1f;
+    --text-color: #f5f3ef;
+    --link-color: #9cc3b1;
+    --accent-color: #b9d2c3;
+
+    /* dark mode sidebar */
+    --sidebar-bg: var(--link-color);
+    --sidebar-text: #1f1f1f;
   }
 }
 
+/* ------------------------------------------------------------ */
+/* EXISTING SITE STYLES                                         */
+/* ------------------------------------------------------------ */
 
 body {
   margin: 0;
   padding: 2rem;
   background-color: var(--bg-color);
   color: var(--text-color);
- font-family: "Courier New", Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   line-height: 1.7;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
@@ -47,14 +58,16 @@ h2 {
 
 a {
   color: var(--link-color);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--link-color);
+  transition: color 0.3s ease, text-decoration-color 0.3s ease;
 }
 
 a:hover {
   color: var(--accent-color);
-  border-color: var(--accent-color);
+  text-decoration-color: var(--accent-color);
 }
 
 ul {
@@ -76,7 +89,72 @@ footer {
   opacity: 0.8;
 }
 
-a {
+/* ------------------------------------------------------------ */
+/* SIDEBAR ADDITIONS                                            */
+/* ------------------------------------------------------------ */
+
+/* ------------------------------------------------------------ */
+/* SIDEBAR — theme matched + content push                       */
+/* ------------------------------------------------------------ */
+
+#sidebar-toggle {
+  display: none;
+}
+
+/* Sidebar wrapper */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background: var(--bg-color);     /* same as site background */
+  border-right: 1px solid var(--accent-color);
+  color: var(--text-color);
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  transform: translateX(-260px);
+  transition: transform 0.35s ease;
+  font-family: "Courier New", Courier, monospace;
+  overflow-y: auto;
+}
+
+/* Slide in */
+#sidebar-toggle:checked ~ .sidebar {
+  transform: translateX(0);
+}
+
+/* Toggle button */
+.sidebar-toggle-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: transparent;
+  border: 1px solid var(--link-color);
+  color: var(--link-color);
+  padding: 0.45rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 1.1rem;
+  transition: left 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Hover state matches your link hover tone */
+.sidebar-toggle-btn:hover {
+  background: var(--link-color);
+  color: var(--bg-color);
+  border-color: var(--link-color);
+}
+
+/* Move button with sidebar */
+#sidebar-toggle:checked ~ .sidebar-toggle-btn {
+  left: 275px;
+}
+
+/* Sidebar links styled like the rest of your site */
+.sidebar a {
   color: var(--link-color);
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -85,7 +163,42 @@ a {
   transition: color 0.3s ease, text-decoration-color 0.3s ease;
 }
 
-a:hover {
+.sidebar a:hover {
   color: var(--accent-color);
   text-decoration-color: var(--accent-color);
+}
+
+.sidebar ul {
+  padding-left: 0;
+
+ /* ------------------------------------------------------------ */
+/* DESKTOP: sidebar open by default                             */
+/* ------------------------------------------------------------ */
+@media (min-width: 900px) {
+  
+  /* On desktop, treat the unchecked state as OPEN */
+  #sidebar-toggle:not(:checked) ~ .sidebar {
+    transform: translateX(0);
+  }
+
+  #sidebar-toggle:not(:checked) ~ .page-content {
+    transform: translateX(260px);
+  }
+
+  #sidebar-toggle:not(:checked) ~ .sidebar-toggle-btn {
+    left: 275px;
+  }
+
+  /* On desktop, treat the checked state as CLOSED */
+  #sidebar-toggle:checked ~ .sidebar {
+    transform: translateX(-260px);
+  }
+
+  #sidebar-toggle:checked ~ .page-content {
+    transform: translateX(0);
+  }
+
+  #sidebar-toggle:checked ~ .sidebar-toggle-btn {
+    left: 15px;
+  }
 }
