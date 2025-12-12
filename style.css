@@ -89,14 +89,6 @@ footer {
   opacity: 0.8;
 }
 
-/* ------------------------------------------------------------ */
-/* SIDEBAR ADDITIONS                                            */
-/* ------------------------------------------------------------ */
-
-/* ------------------------------------------------------------ */
-/* SIDEBAR — theme matched + content push                       */
-/* ------------------------------------------------------------ */
-
 #sidebar-toggle {
   display: none;
 }
@@ -108,8 +100,7 @@ footer {
   left: 0;
   width: 260px;
   height: 100%;
-  background: var(--bg-color);     /* same as site background */
-  border-right: 1px solid var(--accent-color);
+  background: var(--bg-color);
   color: var(--text-color);
   padding: 2rem 1.5rem;
   box-sizing: border-box;
@@ -117,6 +108,7 @@ footer {
   transition: transform 0.35s ease;
   font-family: "Courier New", Courier, monospace;
   overflow-y: auto;
+  border-right: none; /* no visible line */
 }
 
 /* Slide in */
@@ -137,23 +129,17 @@ footer {
   cursor: pointer;
   z-index: 1000;
   font-size: 1.1rem;
-  transition: left 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   font-family: "Courier New", Courier, monospace;
 }
 
-/* Hover state matches your link hover tone */
 .sidebar-toggle-btn:hover {
   background: var(--link-color);
   color: var(--bg-color);
   border-color: var(--link-color);
 }
 
-/* Move button with sidebar */
-#sidebar-toggle:checked ~ .sidebar-toggle-btn {
-  left: 275px;
-}
-
-/* Sidebar links styled like the rest of your site */
+/* Sidebar links */
 .sidebar a {
   color: var(--link-color);
   text-decoration: underline;
@@ -170,35 +156,15 @@ footer {
 
 .sidebar ul {
   padding-left: 0;
+}
 
- /* ------------------------------------------------------------ */
-/* DESKTOP: sidebar open by default                             */
-/* ------------------------------------------------------------ */
+/* Desktop: sidebar open by default, BUT no pushing */
 @media (min-width: 900px) {
-  
-  /* On desktop, treat the unchecked state as OPEN */
   #sidebar-toggle:not(:checked) ~ .sidebar {
     transform: translateX(0);
   }
 
-  #sidebar-toggle:not(:checked) ~ .page-content {
-    transform: translateX(260px);
-  }
-
-  #sidebar-toggle:not(:checked) ~ .sidebar-toggle-btn {
-    left: 275px;
-  }
-
-  /* On desktop, treat the checked state as CLOSED */
   #sidebar-toggle:checked ~ .sidebar {
     transform: translateX(-260px);
-  }
-
-  #sidebar-toggle:checked ~ .page-content {
-    transform: translateX(0);
-  }
-
-  #sidebar-toggle:checked ~ .sidebar-toggle-btn {
-    left: 15px;
   }
 }
