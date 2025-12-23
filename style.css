@@ -1,3 +1,7 @@
+/* ------------------------------------------------------------ */
+/* ROOT VARIABLES                                               */
+/* ------------------------------------------------------------ */
+
 :root {
   /* Light mode */
   --bg-color: #f8f5f0;
@@ -5,9 +9,7 @@
   --link-color: #2f5d50;
   --accent-color: #4f7c68;
 
-  /* Sidebar variables */
-  --sidebar-bg: var(--link-color);
-  --sidebar-text: #ffffff;
+  --sidebar-width: 260px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,15 +18,11 @@
     --text-color: #f5f3ef;
     --link-color: #9cc3b1;
     --accent-color: #b9d2c3;
-
-    /* dark mode sidebar */
-    --sidebar-bg: var(--link-color);
-    --sidebar-text: #1f1f1f;
   }
 }
 
 /* ------------------------------------------------------------ */
-/* EXISTING SITE STYLES                                         */
+/* BASE SITE STYLES                                             */
 /* ------------------------------------------------------------ */
 
 body {
@@ -46,7 +44,6 @@ h1 {
   color: var(--link-color);
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  
 }
 
 h2 {
@@ -75,49 +72,48 @@ ul {
   padding-left: 0;
 }
 
-.links li,
-.works li,
-.experience li {
-  margin-bottom: 0.75rem;
-}
-
 footer {
   margin-top: 3rem;
   font-size: 0.9rem;
   text-align: center;
-  color: var(--text-color);
   opacity: 0.8;
 }
+
+/* ------------------------------------------------------------ */
+/* SIDEBAR                                                      */
+/* ------------------------------------------------------------ */
 
 #sidebar-toggle {
   display: none;
 }
 
-/* Sidebar wrapper */
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 260px;
+  width: var(--sidebar-width);
   height: 100%;
   background: var(--bg-color);
-  color: var(--text-color);
   padding: 2rem 1.5rem;
   box-sizing: border-box;
-  transform: translateX(-260px);
-  transition: transform 0.35s ease;
-  font-family: "Courier New", Courier, monospace;
   overflow-y: auto;
-  border-right: none; /* no visible line */
+  transform: translateX(-100%);
+  transition: transform 0.35s ease;
   z-index: 1000;
 }
 
-/* Slide in */
-#sidebar-toggle:checked ~ .sidebar {
-  transform: translateX(0);
+.sidebar a {
+  color: var(--link-color);
 }
 
-/* Toggle button */
+.sidebar a:hover {
+  color: var(--accent-color);
+}
+
+/* ------------------------------------------------------------ */
+/* TOGGLE BUTTON                                                */
+/* ------------------------------------------------------------ */
+
 .sidebar-toggle-btn {
   position: fixed;
   top: 15px;
@@ -128,84 +124,97 @@ footer {
   padding: 0.45rem 0.75rem;
   border-radius: 4px;
   cursor: pointer;
-  z-index: 1001;
+  z-index: 1100;
   font-size: 1.1rem;
-  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-  font-family: "Courier New", Courier, monospace;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-toggle-btn:hover {
   background: var(--link-color);
   color: var(--bg-color);
-  border-color: var(--link-color);
 }
 
-/* Sidebar links */
-.sidebar a {
-  color: var(--link-color);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--link-color);
-  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+/* ------------------------------------------------------------ */
+/* PAGE CONTENT                                                 */
+/* ------------------------------------------------------------ */
+
+.page-content {
+  position: relative;
+  transition: margin-left 0.35s ease;
 }
 
-.sidebar a:hover {
-  color: var(--accent-color);
-  text-decoration-color: var(--accent-color);
-}
+/* ------------------------------------------------------------ */
+/* DESKTOP BEHAVIOR                                             */
+/* ------------------------------------------------------------ */
 
-.sidebar ul {
-  padding-left: 0;
-}
-
-/* Desktop: sidebar open by default, BUT no pushing */
 @media (min-width: 900px) {
-  #sidebar-toggle:not(:checked) ~ .sidebar {
+
+  .sidebar {
     transform: translateX(0);
   }
 
-  #sidebar-toggle:checked ~ .sidebar {
-    transform: translateX(-260px);
+  .page-content {
+    margin-left: var(--sidebar-width);
   }
-}
 
-@media (min-width: 900px) {
   .sidebar-toggle-btn {
     display: none;
   }
 }
 
+/* ------------------------------------------------------------ */
+/* MOBILE BEHAVIOR                                              */
+/* ------------------------------------------------------------ */
+
+@media (max-width: 899px) {
+
+  .page-content {
+    margin-left: 0;
+  }
+
+  #sidebar-toggle:checked ~ .sidebar {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle-btn {
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------ */
+/* CALLOUT                                                      */
+/* ------------------------------------------------------------ */
+
 .callout {
-  position: relative;             /* for the tail positioning */
-  background-color: #4f7c68;      /* bubble background */
-  color: #ffffff;                 /* text color */
-  padding: 1rem 1.2rem;           /* space inside bubble */
-  border-radius: 10px;            /* rounded corners */
-  font-family: "Courier New", Courier, monospace;
+  position: relative;
+  background-color: #4f7c68;
+  color: #ffffff;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
   margin: 1rem 0;
 }
 
 .callout a {
-  color: white;   /* or use var(--bg-color) if you prefer theme variables */
-  text-decoration: underline;
+  color: #ffffff;
 }
+
+/* ------------------------------------------------------------ */
+/* RESPONSIVE VIDEO                                             */
+/* ------------------------------------------------------------ */
 
 .video-wrapper {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio (height ÷ width = 9 ÷ 16) */
+  padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
-  max-width: 100%;       /* scale to parent width */
-  margin: 1rem 0;        /* optional spacing */
+  max-width: 100%;
+  margin: 1rem 0;
 }
 
 .video-wrapper iframe {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
 }
-
